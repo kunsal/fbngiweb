@@ -1,24 +1,36 @@
-import logo from './logo.svg';
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
+import {HashRouter as Router, Switch} from 'react-router-dom';
+import { navigationLinks } from "./components/common/constants/navigation-links";
+import LayoutRoute from './components/layouts/LayoutRoute';
+import { Helmet } from 'react-helmet';
 
-function App() {
+
+function App({props}) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Helmet>
+        <style>
+        {`
+          .btn-primary {
+            color: #fff;
+            background-color: #6d62ff;
+            border-color: #6d62ff;
+          }
+
+          .btn-primary:hover {
+            background-color: #655cde;
+            border-color: #655cde;
+          }
+        `}  
+        </style>    
+      </Helmet>
+      <Switch>
+        {navigationLinks.map(page => (
+          <LayoutRoute layout={page.layout} path={page.link} component={page.component} key={page.link} exact={page.exact} {...props} /> 
+        ))};
+      </Switch>
+    </Router>
   );
 }
 
